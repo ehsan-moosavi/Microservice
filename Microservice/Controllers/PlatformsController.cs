@@ -2,6 +2,7 @@
 using Microservice.Dtos;
 using Microservice.Interfaces;
 using Microservice.Models;
+using Microservice.SyncDataServices.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,12 @@ namespace Microservice.Controllers
     {
         private readonly IPlatformRepo _repository;
         private readonly IMapper _mapper;
-
-        public PlatformsController(IPlatformRepo repository, IMapper mapper)
+        private readonly ICommadDataClient _commaDataClient;
+        public PlatformsController(IPlatformRepo repository, IMapper mapper,ICommadDataClient commanddataclient)
         {
             _repository = repository;
             _mapper = mapper;
+            _commaDataClient = commanddataclient;
         }
 
 
@@ -46,12 +48,25 @@ namespace Microservice.Controllers
 
         }
         [HttpPost]
-        public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto platformcreateDto)
+        public async Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto platformcreateDto)
         {
             var platformModel = Mapper.Map<Platform>(platformcreateDto);
             _repository.CreatePlatform(platformModel);
             _repository.SaveChanges();
             var platformReadDto = _mapper.Map<PlatformReadDto>(platformModel);
+
+
+            try
+            {
+                await _commaDataClient.SendPlatformToCommaand(platformReadDto);
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"---> could not send synchronously:{ex.Message}");
+            }
+
+
             return CreatedAtRoute(nameof(GetPlatformById),new { ID = platformReadDto.id }, platformReadDto);
 
         }

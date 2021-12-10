@@ -13,6 +13,7 @@ using Microservice.Repository;
 using Microsoft.Extensions.Configuration;
 using Microservice.Interfaces;
 using AutoMapper;
+using Microservice.SyncDataServices.Http;
 
 namespace Microservice
 {
@@ -26,7 +27,9 @@ namespace Microservice
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
+            services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            Console.WriteLine($"-----Command Service Endpoint{Configuration["CommandService"]}");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
