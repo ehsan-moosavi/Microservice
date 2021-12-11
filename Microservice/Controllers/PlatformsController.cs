@@ -50,7 +50,7 @@ namespace Microservice.Controllers
         [HttpPost]
         public async Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto platformcreateDto)
         {
-            var platformModel = Mapper.Map<Platform>(platformcreateDto);
+            var platformModel = _mapper.Map<Platform>(platformcreateDto);
             _repository.CreatePlatform(platformModel);
             _repository.SaveChanges();
             var platformReadDto = _mapper.Map<PlatformReadDto>(platformModel);
