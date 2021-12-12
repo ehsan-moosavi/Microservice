@@ -29,13 +29,14 @@ namespace Microservice
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            var CommandService = Configuration["Logging:LogLevel:Default"];
+         
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-           Console.WriteLine($"----->Command Service Endpoint");
+            var CommandService = Configuration["Logging:LogLevel:Default"];
+            Console.WriteLine($"----->Command Service Endpoint");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
