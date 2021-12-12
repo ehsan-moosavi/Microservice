@@ -29,7 +29,7 @@ namespace Microservice
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            var CommandService = Configuration["CommandService"];
+            var CommandService = Configuration["Logging:LogLevel:Default"];
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
