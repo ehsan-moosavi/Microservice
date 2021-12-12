@@ -19,17 +19,23 @@ namespace Microservice
 {
     public class Startup
     {
+
         public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IConfiguration configuration)
+        {
+            configuration = Configuration;
+        }
         public void ConfigureServices(IServiceCollection services)
         {
+            var CommandService = Configuration["CommandService"];
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-           // Console.WriteLine($"----->Command Service Endpoint{Configuration["CommandService"]}");
+           Console.WriteLine($"----->Command Service Endpoint");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
