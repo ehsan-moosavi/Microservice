@@ -25,7 +25,7 @@ namespace Microservice
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public Startup(IConfiguration configuration)
         {
-            configuration = Configuration;
+            Configuration = configuration;
         }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -35,8 +35,8 @@ namespace Microservice
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            var CommandService = Configuration["Logging:LogLevel:Default"];
-            Console.WriteLine($"----->Command Service Endpoint");
+            var CommandService = Configuration["CommandService"];
+            Console.WriteLine($"----->Command Service Endpoint{CommandService}");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
