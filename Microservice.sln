@@ -5,12 +5,6 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice", "Microservice\Microservice.csproj", "{C66D85D0-D79F-4E59-BAF4-606A8790A8B4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{3E09401D-03FA-4978-B22A-B58D6B030BD0}"
-	ProjectSection(SolutionItems) = preProject
-		Microservice\K8S\microservice-np-srv.yaml = Microservice\K8S\microservice-np-srv.yaml
-		Microservice\K8S\microservices-depl.yaml = Microservice\K8S\microservices-depl.yaml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

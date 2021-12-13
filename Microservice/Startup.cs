@@ -34,9 +34,8 @@ namespace Microservice
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            var CommandService = Configuration["CommandService"];
-            Console.WriteLine($"----->Command Service Endpoint{CommandService}");
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());     
+            Console.WriteLine($"----->Command Service Endpoint {Configuration["CommandService"]}");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
