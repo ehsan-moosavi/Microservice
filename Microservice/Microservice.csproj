@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="K8S\" />
     <Folder Include="SyncDataServices\Grpc\" />
   </ItemGroup>
 
