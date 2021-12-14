@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: microservice-depl
+  name: commands-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: microservice
+      app: commandservice
   template:
     metadata:
       labels:
-        app: microservice
+        app: commandservice
     spec:
       containers:
-        - name: microservice
+        - name: commandservice
           image: ehsanmoosavi/commandservice:latest
 ---
 apiVersion: v1
