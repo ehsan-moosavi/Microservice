@@ -34,7 +34,8 @@ namespace Microservice
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());     
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            Console.WriteLine(">>>>>>>>>");
             Console.WriteLine($"----->Command Service Endpoint {Configuration["CommandService"]}");
         }
 
