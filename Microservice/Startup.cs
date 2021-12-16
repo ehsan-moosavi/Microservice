@@ -21,16 +21,32 @@ namespace Microservice
     {
 
         public IConfiguration Configuration { get; }
+
+        private readonly IWebHostEnvironment _env;
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration,IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
         public void ConfigureServices(IServiceCollection services)
         {
-         
-            services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
+            if (_env.IsProduction())
+            {
+                Console.Write("--->Using Sql Server");
+                services.AddDbContext<AppDbContext>(opt =>
+                opt.UseSqlServer(Configuration.GetConnectionString("PlatformsConn"))
+                    ); 
+            }
+            else
+            {
+                Console.WriteLine("--> Using InMemDB");
+                services.AddDbContext<AppDbContext>
+                    (opt => opt.UseInMemoryDatabase("InMem"));
+
+            }
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
@@ -53,7 +69,7 @@ namespace Microservice
                 {
                     endpoints.MapControllers();
                 });
-            PrepDb.PrepPulation(app);
+            PrepDb.PrepPulation(app,env.IsProduction());
         }
     }
 }
