@@ -33,20 +33,19 @@ namespace Microservice
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            if (_env.IsProduction())
-            {
+            //if (_env.IsProduction())
+            //{
                 Console.Write("--->Using Sql Server");
                 services.AddDbContext<AppDbContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("PlatformsConn"))
-                    ); 
-            }
-            else
-            {
-                Console.WriteLine("--> Using InMemDB");
-                services.AddDbContext<AppDbContext>
-                    (opt => opt.UseInMemoryDatabase("InMem"));
+                opt.UseSqlServer(Configuration.GetConnectionString("PlatformsConn"))); 
+            //}
+            //else
+            //{
+            //    Console.WriteLine("--> Using InMemDB");
+            //    services.AddDbContext<AppDbContext>
+            //        (opt => opt.UseInMemoryDatabase("InMem"));
 
-            }
+            //}
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
@@ -69,7 +68,7 @@ namespace Microservice
                 {
                     endpoints.MapControllers();
                 });
-            PrepDb.PrepPulation(app,env.IsProduction());
+            //PrepDb.PrepPulation(app,env.IsProduction());
         }
     }
 }

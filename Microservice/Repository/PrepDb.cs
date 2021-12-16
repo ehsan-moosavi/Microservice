@@ -23,7 +23,13 @@ namespace Microservice.Repository
         {
             if (isprod)
             {
-                context.Database.Migrate();
+                Console.Write("---> Atemptting to Apply migrations");
+                try { context.Database.Migrate(); }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"----->Could not migration:{ex.Message}");
+                }
+               
             }
             if (!context.Platforms.Any())
             {
