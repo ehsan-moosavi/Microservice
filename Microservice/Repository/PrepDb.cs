@@ -1,5 +1,6 @@
 ﻿using Microservice.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,20 @@ namespace Microservice.Repository
 {
     public static class PrepDb
     {
-        public static void PrepPulation(IApplicationBuilder app)
+        public static void PrepPulation(IApplicationBuilder app,bool isprod)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
-                SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>());
+                SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>(),isprod);
             }
 
         }
-        private static void SeedData(AppDbContext context)
+        private static void SeedData(AppDbContext context,bool isprod)
         {
+            if (isprod)
+            {
+                context.Database.Migrate();
+            }
             if (!context.Platforms.Any())
             {
                 Console.WriteLine("--> Seeding Data");
