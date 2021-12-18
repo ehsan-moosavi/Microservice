@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20211218055120_initialmigration.cs" />
+    <Compile Remove="Migrations\20211218055120_initialmigration.Designer.cs" />
+    <Compile Remove="Migrations\20211218114039_initialmigration.cs" />
+    <Compile Remove="Migrations\20211218114039_initialmigration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Docker.DotNet" Version="3.125.5" />
@@ -21,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="SyncDataServices\Grpc\" />
   </ItemGroup>
 

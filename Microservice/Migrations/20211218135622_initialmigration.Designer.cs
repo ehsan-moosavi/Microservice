@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Microservice.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211218055120_initialmigration")]
+    [Migration("20211218135622_initialmigration")]
     partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

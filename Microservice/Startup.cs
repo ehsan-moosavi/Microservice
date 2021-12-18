@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microservice.Interfaces;
 using AutoMapper;
 using Microservice.SyncDataServices.Http;
-
 namespace Microservice
 {
     public class Startup
@@ -33,7 +32,7 @@ namespace Microservice
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            if (_env.isproduction())
+            if (_env.IsProduction())
             {
                 Console.Write("--->Using Sql Server");
                 services.AddDbContext<AppDbContext>(opt =>
