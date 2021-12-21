@@ -15,6 +15,7 @@ namespace Microservice.Profiles
             //source to Target
             CreateMap<Platform, PlatformReadDto>();
             CreateMap<PlatformCreateDto, Platform>();
+            CreateMap<PlatformReadDto, PlatformPublishedDto>();
         }
 
     }
