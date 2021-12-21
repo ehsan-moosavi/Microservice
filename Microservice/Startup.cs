@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microservice.Interfaces;
 using AutoMapper;
 using Microservice.SyncDataServices.Http;
+using Microservice.AsyncDataServices;
+
 namespace Microservice
 {
     public class Startup
@@ -48,7 +50,9 @@ namespace Microservice
             services.AddControllers();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
+            services.AddSingleton<IMessageBusClient, MessageBusClient>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
             Console.WriteLine(">>>>>>>>>");
             Console.WriteLine($"----->Command Service Endpoint {Configuration["CommandService"]}");
         }
