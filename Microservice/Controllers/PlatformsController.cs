@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microservice.AsyncDataServices;
 using Microservice.Dtos;
 using Microservice.Interfaces;
 using Microservice.Models;
@@ -19,11 +20,16 @@ namespace Microservice.Controllers
         private readonly IPlatformRepo _repository;
         private readonly IMapper _mapper;
         private readonly ICommadDataClient _commaDataClient;
-        public PlatformsController(IPlatformRepo repository, IMapper mapper,ICommadDataClient commanddataclient)
+        private readonly IMessageBusClient _messageBusClient;
+
+        public PlatformsController(IPlatformRepo repository, IMapper mapper,
+            ICommadDataClient commanddataclient,
+            IMessageBusClient messageBusClient)
         {
             _repository = repository;
             _mapper = mapper;
             _commaDataClient = commanddataclient;
+            _messageBusClient = messageBusClient;
         }
 
 
@@ -55,7 +61,7 @@ namespace Microservice.Controllers
             _repository.SaveChanges();
             var platformReadDto = _mapper.Map<PlatformReadDto>(platformModel);
 
-
+            //send sync Message
             try
             {
                 await _commaDataClient.SendPlatformToCommaand(platformReadDto);
@@ -66,6 +72,17 @@ namespace Microservice.Controllers
                 Console.WriteLine($"---> could not send synchronously:{ex.Message}");
             }
 
+            //Send async Message
+            try
+            {
+                var platformPublishDto = _mapper.Map<PlatformPublishedDto>(platformReadDto);
+                platformPublishDto.Event = "Platfrom_Published";
+                _messageBusClient.publishnewPlatform(platformPublishDto);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"---> could not send Asynchronously:{ex.Message}");
+            }
 
             return CreatedAtRoute(nameof(GetPlatformById),new { ID = platformReadDto.id }, platformReadDto);
 
