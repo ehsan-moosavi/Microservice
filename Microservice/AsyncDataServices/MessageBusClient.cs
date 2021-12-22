@@ -47,6 +47,7 @@ namespace Microservice.AsyncDataServices
             if (_connection.IsOpen)
             {
                 Console.Write("---->RabbitMQ COnnection Is Open,Sending Message");
+                SendMessage(message);
 
             }
             else
@@ -61,12 +62,12 @@ namespace Microservice.AsyncDataServices
                 routingKey: "",
                 basicProperties: null,
                 body: body);
-            Console.WriteLine($"---> we have sent message}");
+            Console.WriteLine($"---> we have sent{message}");
 
         }
         public void Dispose()
         {
-            Console.WriteLine("Messagebus Dispose");
+            Console.WriteLine("MessageBus Dispose");
             if (_channel.IsOpen)
             {
                 _channel.Close();

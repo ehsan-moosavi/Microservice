@@ -47,10 +47,11 @@ namespace Microservice
                     (opt => opt.UseInMemoryDatabase("InMem"));
 
             }
-            services.AddControllers();
+            
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddHttpClient<ICommadDataClient, HttpCommandDataClient>();
             services.AddSingleton<IMessageBusClient, MessageBusClient>();
+            services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
             Console.WriteLine(">>>>>>>>>");

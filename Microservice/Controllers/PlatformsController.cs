@@ -40,9 +40,8 @@ namespace Microservice.Controllers
             var PlatFormItems = _repository.GetAllPlatforms();
             return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(PlatFormItems));
         }
+
         [HttpGet("{id}",Name = "GetPlatformById")]
-
-
         public ActionResult<PlatformReadDto> GetPlatformById(int id)
         {
             var platformItem = _repository.GetPlatformById(id);
