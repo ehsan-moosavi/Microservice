@@ -8,7 +8,7 @@ spec:
         app: microservice
     ports:
         - name: microservice
-          protocol: tcp
+          protocol: TCP
           port: 80
           targetPort: 80
     

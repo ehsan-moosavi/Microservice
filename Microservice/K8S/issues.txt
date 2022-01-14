@@ -1,0 +1,8 @@
+خطای
+Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io": Post "https://ingress-nginx-controller-admission.ingress-nginx.svc:443/networking/v1/ingresses?timeout=10s": x509: certificate signed by unknown authority 
+رفع اشکال
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+/////////
+عدم دسترسی به ingress nginx 
+دانلود image های مورد نیاز و تنظیم آن در فایل یامل 
+//////

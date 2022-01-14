@@ -25,7 +25,7 @@ namespace Microservice.AsyncDataServices
             {
                 _connection = factory.CreateConnection();
                 _channel = _connection.CreateModel();
-                _channel.ExchangeDeclare(exchange: "triger", type: ExchangeType.Fanout);
+                _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
                 _connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
                 Console.WriteLine("-->Connected to MessageBox");
             }
@@ -58,7 +58,7 @@ namespace Microservice.AsyncDataServices
         private void SendMessage(string message)
         {
             var body = Encoding.UTF8.GetBytes(message);
-            _channel.BasicPublish(exchange: "triger",
+            _channel.BasicPublish(exchange: "trigger",
                 routingKey: "",
                 basicProperties: null,
                 body: body);
