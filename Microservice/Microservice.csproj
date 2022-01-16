@@ -31,11 +31,10 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="SyncDataServices\Grpc\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf  Include ="Protos\Platform.proto" GrpsserGrpcServices="Server"/>
+    <Protobuf Include="Protos\Platform.proto" GrpcServices="Server" />
   </ItemGroup>
   
 </Project>
