@@ -15,6 +15,8 @@ using Microservice.Interfaces;
 using AutoMapper;
 using Microservice.SyncDataServices.Http;
 using Microservice.AsyncDataServices;
+using Microservice.SyncDataServices.Grpc;
+using System.IO;
 
 namespace Microservice
 {
@@ -53,7 +55,7 @@ namespace Microservice
             services.AddSingleton<IMessageBusClient, MessageBusClient>();
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
+            services.AddGrpc();
             Console.WriteLine(">>>>>>>>>");
             Console.WriteLine($"----->Command Service Endpoint {Configuration["CommandService"]}");
         }
@@ -71,8 +73,19 @@ namespace Microservice
                 endpoints =>
                 {
                     endpoints.MapControllers();
+                    endpoints.MapGrpcService<GrpcPlatformService>();
+                    endpoints.MapGet("/protos/platforms.proto", async context =>
+                     {
+                         await context.Response.WriteAsync(File.ReadAllText("Protos/Platform.proto"));
+                     });
+
+
                 });
+              
+
             PrepDb.PrepPulation(app, env.IsProduction());
         }
+
+        
     }
 }
